@@ -1,4 +1,4 @@
-package fr.hbis.maven.plugins.docker;
+package io.foobot.maven.plugins.docker;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import fr.hbis.maven.plugins.docker.BuildMojo;
+import io.foobot.maven.plugins.docker.BuildMojo;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BuildMojoTest extends AbstractMojoTestCase {

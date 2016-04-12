@@ -1,4 +1,4 @@
-package fr.hbis.maven.plugins.docker;
+package io.foobot.maven.plugins.docker;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package fr.hbis.maven.plugins.docker;
+package io.foobot.maven.plugins.docker;
 
 import org.apache.maven.settings.Server;
 import org.apache.maven.settings.Settings;

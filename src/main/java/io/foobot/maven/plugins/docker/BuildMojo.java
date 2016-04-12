@@ -1,4 +1,4 @@
-package fr.hbis.maven.plugins.docker;
+package io.foobot.maven.plugins.docker;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.settings.Settings;
