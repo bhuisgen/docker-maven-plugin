@@ -11,7 +11,7 @@
     <description>A maven plugin to build docker images</description>
 
     <prerequisites>
-        <maven>3.0</maven>
+        <maven>3.3</maven>
     </prerequisites>
 
     <properties>
@@ -90,13 +90,18 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.0.0</version>
+                                    <version>3.3.2</version>
                                 </requireMavenVersion>
                             </rules>
                             <fail>true</fail>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.4</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
