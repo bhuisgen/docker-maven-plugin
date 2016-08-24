@@ -24,10 +24,10 @@ import org.codehaus.plexus.util.DirectoryScanner;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.BuildResponseItem;
+import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
-import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
 
 @Mojo(name = "build")
 public class BuildMojo extends AbstractMojo {
@@ -74,15 +74,13 @@ public class BuildMojo extends AbstractMojo {
         }
 
         validateParameters();
-
-        DockerClientConfig dockerClientConfig = DockerClientConfig.createDefaultConfigBuilder()
+        
+        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerHost("unix:///var/run/docker.sock").withDockerTlsVerify(false).build();
-        DockerCmdExecFactoryImpl dockerCmdExecFactory = new DockerCmdExecFactoryImpl();
         DockerClient dockerClient = null;
 
         try {
-            dockerClient = DockerClientBuilder.getInstance(dockerClientConfig)
-                    .withDockerCmdExecFactory(dockerCmdExecFactory).build();
+            dockerClient = DockerClientBuilder.getInstance(dockerClientConfig).build();
 
             build(dockerClient);
         } catch (Exception e) {
