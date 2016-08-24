@@ -25,10 +25,7 @@
                 </executions>
                 <configuration>
                     <directory>src/test/resources/docker</directory>
-                    <imageName>test</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
+                    <imageName>test-build</imageName>
                 </configuration>
             </plugin>
         </plugins>
