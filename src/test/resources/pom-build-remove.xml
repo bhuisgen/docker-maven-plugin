@@ -25,13 +25,8 @@
                 </executions>
                 <configuration>
                     <directory>src/test/resources/docker</directory>
-                    <imageName>test-build-resources</imageName>
-                    <resources>
-                        <resource>
-                            <targetPath>/root</targetPath>
-                            <directory>src/test/resources/custom</directory>
-                        </resource>
-                    </resources>
+                    <imageName>test-build-remove</imageName>
+                    <remove>true</remove>
                 </configuration>
             </plugin>
         </plugins>
