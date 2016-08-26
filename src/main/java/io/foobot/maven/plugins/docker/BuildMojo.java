@@ -84,8 +84,7 @@ public class BuildMojo extends AbstractMojo {
 
         validateParameters();
         
-        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost("unix:///var/run/docker.sock").withDockerTlsVerify(false).build();
+        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder().build();
         DockerClient dockerClient = null;
 
         try {
