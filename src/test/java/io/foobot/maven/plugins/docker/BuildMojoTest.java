@@ -179,6 +179,9 @@ public class BuildMojoTest extends AbstractMojoTestCase {
         String imageId = null;
         
         for (Image image : images) {
+            if (image.getRepoTags() == null)
+                continue;
+
             for (String repoTag : image.getRepoTags()) {
                 if (repoTag.equals(imageName + ":" + imageTag))
                     imageId = image.getId();
@@ -199,6 +202,9 @@ public class BuildMojoTest extends AbstractMojoTestCase {
         String imageId = null;
         
         for (Image image : images) {
+            if (image.getRepoTags() == null)
+                continue;
+
             for (String repoTag : image.getRepoTags()) {
                 if (repoTag.equals(imageName + ":" + imageTag))
                     imageId = image.getId();
@@ -219,6 +225,9 @@ public class BuildMojoTest extends AbstractMojoTestCase {
         String imageId = null;
         
         for (Image image : images) {
+            if (image.getRepoTags() == null)
+                continue;
+
             for (String repoTag : image.getRepoTags()) {
                 if (repoTag.equals(imageName + ":" + imageTag))
                     imageId = image.getId();
