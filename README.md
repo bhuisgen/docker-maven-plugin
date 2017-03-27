@@ -10,7 +10,7 @@ To build a docker image of your project, add the plugin in your POM file:
         <plugin>
             <groupId>io.foobot.maven.plugins</groupId>
             <artifactId>docker-maven-plugin</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.1.0</version>
             <executions>
                 <execution>
                     <phase>package</phase>
@@ -21,7 +21,7 @@ To build a docker image of your project, add the plugin in your POM file:
             </executions>
             <configuration>
                 <directory>src/main/docker</directory>
-                <imageName>registry/group/${project.artifactId}</imageName>
+                <imageName>registry.host.io/group/${project.artifactId}</imageName>
                 <imageTags>
                     <imageTag>latest</imageTag>
                 </imageTags>
@@ -35,5 +35,8 @@ Create the directory *src/main/docker* in your project and add it your custom
 *Dockerfile*:
 
     FROM bhuisgen/alpine-java:latest
-
     COPY /root /
+
+Build your project:
+
+    $ mvn clean install
