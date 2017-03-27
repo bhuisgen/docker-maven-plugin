@@ -23,11 +23,15 @@ import org.apache.maven.settings.Settings;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.command.BuildImageCmd;
+import com.github.dockerjava.api.command.PushImageCmd;
+import com.github.dockerjava.api.command.RemoveImageCmd;
 import com.github.dockerjava.api.model.BuildResponseItem;
+import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
-import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
+import com.github.dockerjava.core.command.PushImageResultCallback;
 
 @Mojo(name = "build")
 public class BuildMojo extends AbstractMojo {
@@ -49,40 +53,43 @@ public class BuildMojo extends AbstractMojo {
     @Parameter(property = "directory")
     private File directory;
 
-    @Parameter(property = "forceRm", defaultValue = "false")
-    private boolean forceRm;
+    @Parameter(property = "buildForceRm", defaultValue = "false")
+    private boolean buildForceRm;
 
-    @Parameter(property = "noCache", defaultValue = "false")
-    private boolean noCache;
+    @Parameter(property = "buildNoCache", defaultValue = "false")
+    private boolean buildNoCache;
 
-    @Parameter(property = "pull", defaultValue = "false")
-    private boolean pull;
-
+    @Parameter(property = "buildPull", defaultValue = "false")
+    private boolean buildPull;
+    
     @Parameter(property = "imageName")
     private String imageName;
-
+    
     @Parameter(property = "imageTags")
     private List<String> imageTags;
+    
+    @Parameter(property = "push", defaultValue = "false")
+    private boolean push;
+    
+    @Parameter(property = "remove", defaultValue = "false")
+    private boolean remove;
 
     @Parameter(property = "resources")
     private List<Resource> resources;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (skipDocker) {
-            getLog().info("Docker is skipped.");
+            getLog().info("Skipping docker build");
             return;
         }
 
         validateParameters();
-
-        DockerClientConfig dockerClientConfig = DockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost("unix:///var/run/docker.sock").withDockerTlsVerify(false).build();
-        DockerCmdExecFactoryImpl dockerCmdExecFactory = new DockerCmdExecFactoryImpl();
+        
+        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder().build();
         DockerClient dockerClient = null;
 
         try {
-            dockerClient = DockerClientBuilder.getInstance(dockerClientConfig)
-                    .withDockerCmdExecFactory(dockerCmdExecFactory).build();
+            dockerClient = DockerClientBuilder.getInstance(dockerClientConfig).build();
 
             build(dockerClient);
         } catch (Exception e) {
@@ -108,9 +115,8 @@ public class BuildMojo extends AbstractMojo {
     }
 
     private void build(DockerClient dockerClient) throws IOException {
-
-        getLog().info("Copying resources");
-
+        getLog().info("Building image ...");
+        
         Resource dockerResource = new Resource();
         dockerResource.setDirectory(directory.toString());
         resources.add(dockerResource);
@@ -150,9 +156,7 @@ public class BuildMojo extends AbstractMojo {
                 }
             }
         }
-
-        getLog().info("Building image " + imageName);
-
+        
         BuildImageResultCallback callback = new BuildImageResultCallback() {
             @Override
             public void onNext(BuildResponseItem item) {
@@ -163,16 +167,41 @@ public class BuildMojo extends AbstractMojo {
                 super.onNext(item);
             }
         };
+        
+        BuildImageCmd buildCmd = dockerClient.buildImageCmd(buildPath.toFile());
+        
+        String imageId = buildCmd.withForcerm(buildForceRm).withNoCache(buildNoCache).withPull(buildPull).exec(callback).awaitImageId();
 
-        String imageId = dockerClient.buildImageCmd(buildPath.toFile()).withForcerm(forceRm).withNoCache(noCache)
-                .withPull(pull).exec(callback).awaitImageId();
-
-        getLog().info("Tagging image " + imageName);
-
-        dockerClient.tagImageCmd(imageId, imageName, "latest").exec();
-
-        for (String imageTag : imageTags) {
-            dockerClient.tagImageCmd(imageId, imageName, imageTag).exec();
+        if (imageTags.isEmpty()) {
+            dockerClient.tagImageCmd(imageId, imageName, "latest").exec();
+        } else {
+            for (String imageTag : imageTags) {
+                dockerClient.tagImageCmd(imageId, imageName, imageTag).exec();
+            }
+        }
+        
+        if (push) {
+            getLog().info("Pushing image ...");
+            
+            if (imageTags.isEmpty()) {
+                PushImageCmd pushImageCmd = dockerClient.pushImageCmd(imageName);
+                
+                pushImageCmd.withTag("latest").exec(new PushImageResultCallback()).awaitSuccess();
+            } else {
+                for (String imageTag : imageTags) {
+                    PushImageCmd pushImageCmd = dockerClient.pushImageCmd(imageName);
+                    
+                    pushImageCmd.withTag(imageTag).exec(new PushImageResultCallback()).awaitSuccess();
+                }
+            }
+        }
+        
+        if (remove) {
+            getLog().info("Removing image ...");
+            
+            RemoveImageCmd removeImageCmd = dockerClient.removeImageCmd(imageId);
+            
+            removeImageCmd.withForce(true).exec();
         }
     }
 

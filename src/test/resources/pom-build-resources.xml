@@ -6,7 +6,7 @@
     <name>Docker Maven Plugin Test Pom</name>
     <groupId>io.foobot.maven.plugins</groupId>
     <artifactId>maven-docker-plugin-test</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <build>
@@ -14,7 +14,7 @@
             <plugin>
                 <groupId>io.foobot.maven.plugins</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.1.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -25,10 +25,7 @@
                 </executions>
                 <configuration>
                     <directory>src/test/resources/docker</directory>
-                    <imageName>test</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
+                    <imageName>test-build-resources</imageName>
                     <resources>
                         <resource>
                             <targetPath>/root</targetPath>

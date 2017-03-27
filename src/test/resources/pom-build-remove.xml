@@ -25,7 +25,8 @@
                 </executions>
                 <configuration>
                     <directory>src/test/resources/docker</directory>
-                    <imageName>test-build</imageName>
+                    <imageName>test-build-remove</imageName>
+                    <remove>true</remove>
                 </configuration>
             </plugin>
         </plugins>
