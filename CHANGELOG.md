@@ -1,3 +1,9 @@
+## 0.2.0 (2017-10-21)
+
+**Features**
+
+* Update to docker-java 3.0.14
+
 ## 0.1.0 (2017-03-27)
 
 **Features:**
@@ -7,7 +13,6 @@
 **Bugfixes:**
 
 * Fix missing repository tags check in unit tests
-
 
 ## 0.0.3 (2016-08-31)
 
