@@ -1,9 +1,8 @@
-package io.foobot.maven.plugins.docker;
+package fr.hbis.maven.plugins.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.RemoveImageCmd;
-import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.api.model.Ports;

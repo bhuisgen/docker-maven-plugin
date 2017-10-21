@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Docker Maven Plugin Test Pom</name>
-    <groupId>io.foobot.maven.plugins</groupId>
+    <groupId>fr.hbis.maven.plugins</groupId>
     <artifactId>maven-docker-plugin-test</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>io.foobot.maven.plugins</groupId>
+                <groupId>fr.hbis.maven.plugins</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.1.0-SNAPSHOT</version>
+                <version>0.2.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
