@@ -8,7 +8,7 @@ To build a docker image of your project, add the plugin in your POM file:
 
     </plugins>
         <plugin>
-            <groupId>io.foobot.maven.plugins</groupId>
+            <groupId>fr.hbis.maven.plugins</groupId>
             <artifactId>docker-maven-plugin</artifactId>
             <version>0.1.0</version>
             <executions>

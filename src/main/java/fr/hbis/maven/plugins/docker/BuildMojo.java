@@ -1,4 +1,4 @@
-package io.foobot.maven.plugins.docker;
+package fr.hbis.maven.plugins.docker;
 
 import java.io.File;
 import java.io.IOException;
