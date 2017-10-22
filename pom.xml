@@ -4,7 +4,7 @@
 
     <groupId>fr.hbis.maven.plugins</groupId>
     <artifactId>docker-maven-plugin</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>docker-maven-plugin</name>
@@ -210,7 +210,7 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>falsefalse</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
